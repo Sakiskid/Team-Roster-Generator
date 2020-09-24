@@ -10,6 +10,12 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+async function startApplication() {
+    console.info("\n\nThank you for using Team Roster Generator!")
+
+
+}
+
 /*
 todo: 
 1. create employee.js
