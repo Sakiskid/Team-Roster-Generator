@@ -1,6 +1,7 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const htmlRenderer = require("./lib/htmlRenderer");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -17,6 +18,8 @@ async function startApplication() {
 
     let team = await prompts.gatherTeamInfo();
     console.log("Finished prompt! Team: ", team);
+
+    htmlRenderer(team)
 }
 
 /*

@@ -1,4 +1,7 @@
 const inquirer = require('inquirer');
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 inquirer.registerPrompt('selectLine', require('inquirer-select-line'));
 
 const confirmQuestion = {
@@ -126,40 +129,42 @@ const newTeamMemberQuestions = [
         choices: ["Intern", "Engineer", "Manager"],
     },
     {
+        name: "id",
+        type: "number",
+    },
+    {
         name: "email",
         message: "Team Member Email: ",
     },
     {
-        name: "secondaryInfoList",
-        message: "Would you like to add a secondary piece of information?",
-        type: "list",
-        choices: ["None", "GitHub", "Office Number", "Website", "Phone Number", "Other",]
-    },
-    {
-        name: "secondaryInfo",
+        name: "other",
         message: (answers) => {
-            if()
-        },
-        when: (answers) => {
-            if(answers.secondaryInfoList != "None") return true;
+            switch (answers.role) {
+                case "Intern":
+                    return "Please input Intern's school: ";
+                case "Engineer":
+                    return "Please input Engineer's GitHub Username: ";
+                case "Manager":
+                    return "Please input Manager's Office Number: ";
+            }
         },
     },
 ]
 
 async function addNewTeamMember() {
     let answers = await inquirer.prompt(newTeamMemberQuestions);
-    let newTeamMember = {name, role, email, secondaryInfoList, secondaryInfo} = answers;
+    let newTeamMember = {name, id, email, other} = answers;
 
     console.info(`Does this look correct?`);
     console.info(`Name: ${newTeamMember.name}`);
     console.info(`Role: ${newTeamMember.role}`);
+    console.info(`ID: ${newTeamMember.id}`);
     console.info(`Email: ${newTeamMember.email}`);
+    console.info(`Other: ${newTeamMember.other}`);
 
     let confirm = await inquirer.prompt(confirmQuestion);
-    if (confirm.confirm == false) { await addNewTeamMember; }
-    else {
-        teamMembers.push(newTeamMember);
-    }
+    if (confirm.confirm == false) { await addNewTeamMember(); }
+    else {teamMembers.push(newTeamMember);}
 }
 
 async function gatherTeamInfo() {
@@ -171,19 +176,11 @@ async function gatherTeamInfo() {
         // If the user chose to add a new line:
         if(mainAnswer === "new") { 
             let newTeamMemberAnswer = await addNewTeamMember();
-            // let newTeamMemberAnswer = answers["New Team Member"];
-            // let newTeamMember = {
-            //     name: newTeamMemberAnswer[],
-            //     role: newTeamMemberAnswer,
-            // }
-            // // Put this at the end of the list
-            // teamMembers.push(newTeamMember);
             return startPrompt();
         }
 
         else if (mainAnswer === "finish") {
-            // let namesToFormat = teamMembers.map(element => element.name);
-            return teamMembers;
+            // Do nothing, so that the prompt isn't started again and instead it continues out of the startPrompt function
         }
 
         // EDITING A LINE:
@@ -203,14 +200,14 @@ async function gatherTeamInfo() {
                 }
             }
 
-            else if(editAnswer === "order") {
-                let orderAnswer = answers["Edit - Order"];
+            // else if(editAnswer === "order") {
+            //     let orderAnswer = answers["Edit - Order"];
 
-                // Get Object that we are reordering, and remove it from the list
-                let objectToReorder = teamMembers[listObjectToEditIndex];
-                teamMembers.splice(listObjectToEditIndex, 1);
-                teamMembers.splice(orderAnswer, 0, objectToReorder);
-            }
+            //     // Get Object that we are reordering, and remove it from the list
+            //     let objectToReorder = teamMembers[listObjectToEditIndex];
+            //     teamMembers.splice(listObjectToEditIndex, 1);
+            //     teamMembers.splice(orderAnswer, 0, objectToReorder);
+            // }
             
             else if(editAnswer === "name") {
                 let textAnswer = answers["Edit - Name"];
@@ -220,7 +217,27 @@ async function gatherTeamInfo() {
         }
     }
     await startPrompt();
-    return teamMembers;
+    let team = await finalizeTeam();
+    return team;
+}
+
+async function finalizeTeam() {
+    let finalTeam = [];
+    for (let i = 0; i < teamMembers.length; i++) {
+        let m = teamMembers[i];
+        switch(m.role) {
+            case "Intern":
+                finalTeam.push(new Intern(m.name, m.id, m.email, m.other));
+                break;
+            case "Engineer":
+                finalTeam.push(new Engineer(m.name, m.id, m.email, m.other));
+                break;
+            case "Manager":
+                finalTeam.push(new Manager(m.name, m.id, m.email, m.other));
+                break;
+        }
+    }
+    return finalTeam;
 }
 
 exports.gatherTeamInfo = gatherTeamInfo;
