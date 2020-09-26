@@ -64,8 +64,8 @@ const teamQuestions = [
                 value: "name",
             },
             {
-                name: "Edit Position",
-                value: "position",
+                name: "Edit Role",
+                value: "role",
             },
             {
                 name: "Change order",
@@ -84,11 +84,11 @@ const teamQuestions = [
         when: (answers) => { if (answers["Edit"] === "name") return true; }
     },
     {
-        name: "Edit - Position",
+        name: "Edit - Role",
         type: "list",
-        message: "Please select the correction position: ",
+        message: "Please select the correction role: ",
         choices: ["Intern", "Engineer", "Manager"],
-        when: (answers) => { if (answers["Edit"] === "position") return true; }
+        when: (answers) => { if (answers["Edit"] === "role") return true; }
     },
     {
         name: "Edit - Order",
@@ -120,8 +120,8 @@ const newTeamMemberQuestions = [
         message: "Team Member Name: ",
     },
     {
-        name: "position",
-        message: "Team Member Position: ",
+        name: "role",
+        message: "Team Member Role: ",
         type: "list",
         choices: ["Intern", "Engineer", "Manager"],
     },
@@ -137,7 +137,9 @@ const newTeamMemberQuestions = [
     },
     {
         name: "secondaryInfo",
-        message: "Please input secondary info: ",
+        message: (answers) => {
+            if()
+        },
         when: (answers) => {
             if(answers.secondaryInfoList != "None") return true;
         },
@@ -146,18 +148,12 @@ const newTeamMemberQuestions = [
 
 async function addNewTeamMember() {
     let answers = await inquirer.prompt(newTeamMemberQuestions);
-    let newTeamMember = {name, position, email, secondaryInfoList, secondaryInfo} = answers;
+    let newTeamMember = {name, role, email, secondaryInfoList, secondaryInfo} = answers;
 
     console.info(`Does this look correct?`);
     console.info(`Name: ${newTeamMember.name}`);
-    console.info(`Position: ${newTeamMember.position}`);
+    console.info(`Role: ${newTeamMember.role}`);
     console.info(`Email: ${newTeamMember.email}`);
-    if(newTeamMember.secondaryInfoList != "None" && newTeamMember.secondaryInfoList != "Other") {
-        console.info(`${newTeamMember.secondaryInfoList}: ${newTeamMember.secondaryInfo}`);
-    } 
-    else if (newTeamMember.secondaryInfoList === "Other") {
-        console.info(secondaryInfo);
-    }
 
     let confirm = await inquirer.prompt(confirmQuestion);
     if (confirm.confirm == false) { await addNewTeamMember; }
@@ -178,7 +174,7 @@ async function gatherTeamInfo() {
             // let newTeamMemberAnswer = answers["New Team Member"];
             // let newTeamMember = {
             //     name: newTeamMemberAnswer[],
-            //     position: newTeamMemberAnswer,
+            //     role: newTeamMemberAnswer,
             // }
             // // Put this at the end of the list
             // teamMembers.push(newTeamMember);
