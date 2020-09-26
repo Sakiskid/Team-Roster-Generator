@@ -9,14 +9,45 @@ body h1 {
   background-color: #485666;
 }
 
+.card {
+  margin: 10px;
+}
+
 .intern-card {
-  box-shadow: blue;
+  box-shadow: #9da842 4px 4px 20px -5px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+.intern-card .card-header {
+  background-color: #f8f9f0;
+  border: #c6ce82 outset 2px;
+}
+.intern-card .card-body {
+  background-color: lightgray;
 }
 
 .engineer-card {
-  box-shadow: green;
+  box-shadow: #375e37 4px 4px 20px -5px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+.engineer-card .card-header {
+  background-color: #bcd8bc;
+  border: #5d9e5d outset 2px;
+}
+.engineer-card .card-body {
+  background-color: lightgray;
 }
 
 .manager-card {
-  box-shadow: red;
+  box-shadow: #1019a4 4px 4px 20px -5px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+.manager-card .card-header {
+  background-color: #bbbff8;
+  border: #2f3beb outset 2px;
+}
+.manager-card .card-body {
+  background-color: lightgray;
 }

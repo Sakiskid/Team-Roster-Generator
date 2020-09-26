@@ -25,13 +25,16 @@ async function startApplication() {
 }
 
 const writeHTML = html => {
-    fs.mkdirSync(OUTPUT_DIR);
+    fs.access(OUTPUT_DIR, err => {
+        if(err) {fs.mkdirSync(OUTPUT_DIR);}
+    });
     fs.writeFileSync(outputPath, html);
 }
 
 /*
 todo: 
-1. create employee.js
+1. create employee.jsef
+
 2. 
 flow:
 1. gather team member info / create team member objects

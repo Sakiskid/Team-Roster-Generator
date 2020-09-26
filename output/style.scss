@@ -1,8 +1,8 @@
 $clr-gray: rgba($color: #485666, $alpha: 1.0);
 $clr-lightgray: rgba($color: #6a7583, $alpha: 1.0);
-$clr-manager: red;
-$clr-engineer: green;
-$clr-intern: blue;
+$clr-manager: rgb(47, 59, 235);
+$clr-engineer: rgb(93, 158, 93);
+$clr-intern: rgb(198, 206, 130);
 
 body {
     background-color: $clr-lightgray;
@@ -12,7 +12,18 @@ body {
 }
 
 @mixin employee-colors($clr) {
-    box-shadow: $clr;
+    box-shadow: darken($clr, 20) 4px 4px 20px -5px;
+    border: 2px solid black;
+    border-radius: 5px;
+
+    .card-header {
+        background-color: lighten($color: $clr, $amount: 30);
+        border: $clr outset 2px;
+    }
+
+    .card-body {
+        background-color: lightgray;
+    }
 }
 
 .jumbotron {
@@ -20,7 +31,7 @@ body {
 }
 
 .card {
-    // box-shadow: red 4px 4px 5px;
+    margin: 10px;
 }
 
 .intern-card {
