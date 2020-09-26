@@ -1,0 +1,22 @@
+body {
+  background-color: #6a7583;
+}
+body h1 {
+  font-size: 500%;
+}
+
+.jumbotron {
+  background-color: #485666;
+}
+
+.intern-card {
+  box-shadow: blue;
+}
+
+.engineer-card {
+  box-shadow: green;
+}
+
+.manager-card {
+  box-shadow: red;
+}

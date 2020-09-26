@@ -19,7 +19,14 @@ async function startApplication() {
     let team = await prompts.gatherTeamInfo();
     console.log("Finished prompt! Team: ", team);
 
-    htmlRenderer(team)
+    // Render and Write HTML to page
+    let html = htmlRenderer(team);
+    writeHTML(html);
+}
+
+const writeHTML = html => {
+    fs.mkdirSync(OUTPUT_DIR);
+    fs.writeFileSync(outputPath, html);
 }
 
 /*

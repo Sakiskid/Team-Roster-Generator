@@ -1,0 +1,36 @@
+$clr-gray: rgba($color: #485666, $alpha: 1.0);
+$clr-lightgray: rgba($color: #6a7583, $alpha: 1.0);
+$clr-manager: red;
+$clr-engineer: green;
+$clr-intern: blue;
+
+body {
+    background-color: $clr-lightgray;
+    h1 {
+        font-size: 500%;
+    }
+}
+
+@mixin employee-colors($clr) {
+    box-shadow: $clr;
+}
+
+.jumbotron {
+    background-color: $clr-gray;
+}
+
+.card {
+    // box-shadow: red 4px 4px 5px;
+}
+
+.intern-card {
+    @include employee-colors($clr-intern);
+}
+
+.engineer-card {
+    @include employee-colors($clr-engineer);
+}
+
+.manager-card {
+    @include employee-colors($clr-manager);
+}
