@@ -17,7 +17,7 @@ const teamQuestions = [
     {
         name: "Main",
         type: "list",
-        message: style.q("Please list your team members (you will be able to add contact info after): "),
+        message: style.q("\n\nPlease list your team members: \n"),
         loop: false,
         pageSize: 16,
         choices: () => {
@@ -70,6 +70,14 @@ const teamQuestions = [
             {
                 name: "Edit Role",
                 value: "role",
+            },
+            {
+                name: "Edit ID",
+                value: "id",
+            },
+            {
+                name: "Edit Email",
+                value: "email",
             },
             {
                 name: "Change order",
@@ -171,7 +179,7 @@ async function addNewTeamMember() {
 
 async function gatherTeamInfo() {
     startPrompt = async function () {
-        // console.clear();
+        style.clear();
         let answers = await inquirer.prompt(teamQuestions);
         let mainAnswer = answers["Main"];
         
@@ -182,7 +190,6 @@ async function gatherTeamInfo() {
         }
 
         else if (mainAnswer === "finish") {
-            // Do nothing, so that the prompt isn't started again and instead it continues out of the startPrompt function
         }
 
         // EDITING A LINE:

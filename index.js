@@ -19,11 +19,15 @@ async function startApplication() {
     console.info(style.h1("\n\nThank you for using Team Roster Generator!\n"));
 
     let team = await prompts.gatherTeamInfo();
-    console.log("Finished prompt! Team: ", team);
 
     // Render and Write HTML to page
     let html = htmlRenderer(team);
     writeHTML(html);
+    style.clear();
+    console.info(style.h1("\n\nYour team's roster has been generated!\n\n"));
+    console.info(style.h2("You can find your completed roster here:\n"));
+    console.info(style.h2(outputPath));
+    console.info(style.small("\nCreated by Tyler Smith, Sept. 2020.\nhttp://www.GitHub.com/Sakiskid"))
 }
 
 const writeHTML = html => {

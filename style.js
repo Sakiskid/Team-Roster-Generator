@@ -4,12 +4,20 @@ const h1 = (text) => {
     return chalk.bold.underline.blueBright(text);
 }
 
+const h2 = (text) => {
+    return chalk.bold.cyan(text);
+}
+
+const small = (text) => {
+    return chalk.italic.gray(text);
+}
+
 const q = (text) => {
     return chalk.yellowBright.italic(text);
 }
 
 const confirm = (text) => {
-    return chalk.bgYellow.black.underline;
+    return chalk.bgGray.red.underline(text);
 }
 
 const clear = () => {
@@ -19,6 +27,9 @@ const clear = () => {
 
 module.exports = {
     h1: h1,
+    h2: h2,
+    small: small,
     clear: clear,
     q: q,
+    confirm: confirm,
 }
