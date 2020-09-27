@@ -11,6 +11,11 @@ const confirmQuestion = {
     type: "confirm",
 }
 
+const teamNameQuestion = {
+    name: "teamName",
+    message: style.h1("Please list Team Name! "),
+}
+
 // listElements is important! ListPrompt() accesses and changes this for listQuestions.
 let teamMembers = [];
 const teamQuestions = [
@@ -38,16 +43,6 @@ const teamQuestions = [
             return newChoices;
         } 
     },
-    // {
-    //     name: "New Team Member",
-    //     type: "input",
-    //     message: "Add new Team Member: \n",
-    //     when: (answers) => { // If the installation main value is new...
-    //         if (answers["Main"] === "new") {
-    //             return true;
-    //         } else return false;
-    //     }
-    // },
     {
         name: "Edit",
         type: "list",
@@ -249,4 +244,13 @@ async function finalizeTeam() {
     return finalTeam;
 }
 
+async function gatherTeamName () {
+    let answers = await inquirer.prompt(teamNameQuestion);
+
+    let confirm = await inquirer.prompt(confirmQuestion);
+    if (confirm.confirm == false) { await gatherTeamName(); }
+    else {return answers.teamName; }
+}
+
 exports.gatherTeamInfo = gatherTeamInfo;
+exports.gatherTeamName = gatherTeamName;

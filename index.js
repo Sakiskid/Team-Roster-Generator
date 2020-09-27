@@ -18,12 +18,14 @@ async function startApplication() {
     style.clear();
     console.info(style.h1("\n\nThank you for using Team Roster Generator!\n"));
 
+    let teamname = await prompts.gatherTeamName();
+    console.log(teamname);
     let team = await prompts.gatherTeamInfo();
 
     // Render and Write HTML to page
-    let html = htmlRenderer(team);
+    let html = htmlRenderer(teamname, team);
     writeHTML(html);
-    style.clear();
+    // style.clear();
     console.info(style.h1("\n\nYour team's roster has been generated!\n\n"));
     console.info(style.h2("You can find your completed roster here:\n"));
     console.info(style.h2(outputPath));
