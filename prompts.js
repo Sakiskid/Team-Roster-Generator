@@ -2,11 +2,12 @@ const inquirer = require('inquirer');
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const style = require('./style');
 inquirer.registerPrompt('selectLine', require('inquirer-select-line'));
 
 const confirmQuestion = {
     name: "confirm",
-    message: "Confirm?",
+    message: style.confirm("Confirm?"),
     type: "confirm",
 }
 
@@ -16,7 +17,7 @@ const teamQuestions = [
     {
         name: "Main",
         type: "list",
-        message: "Please list your team members (you will be able to add contact info after): ",
+        message: style.q("Please list your team members (you will be able to add contact info after): "),
         loop: false,
         pageSize: 16,
         choices: () => {
@@ -50,7 +51,7 @@ const teamQuestions = [
     {
         name: "Edit",
         type: "list",
-        message: "How would you like to edit this Team Member?",
+        message: style.q("How would you like to edit this Team Member?"),
         when: (answers) => { // If the user chose to edit a line...
             if (answers["Main"] !== "finish" &&
                 answers["Main"] !== "new") {
@@ -83,20 +84,20 @@ const teamQuestions = [
     {
         name: "Edit - Name",
         type: "input",
-        message: "Please change name: ",
+        message: style.q("Please change name: "),
         when: (answers) => { if (answers["Edit"] === "name") return true; }
     },
     {
         name: "Edit - Role",
         type: "list",
-        message: "Please select the correction role: ",
+        message: style.q("Please select the correction role: "),
         choices: ["Intern", "Engineer", "Manager"],
         when: (answers) => { if (answers["Edit"] === "role") return true; }
     },
     {
         name: "Edit - Order",
         type: "selectLine",
-        message: "Please change order: ",
+        message: style.q("Please change order: "),
         when: (answers) => { if (answers["Edit"] === "order") return true; },
         // placeholder: (answers) => answers["Main"],
         choices: (answers) => {
@@ -112,7 +113,7 @@ const teamQuestions = [
     {
         name: "Edit - Delete",
         type: "confirm",
-        message: "Are you sure you want to delete this line?",
+        message: style.q("Are you sure you want to delete this line?"),
         when: (answers) => { if (answers["Edit"] === "delete") return true; }
     },
 ]
@@ -120,32 +121,33 @@ const teamQuestions = [
 const newTeamMemberQuestions = [
     {
         name: "name",
-        message: "Team Member Name: ",
+        message: style.q("Team Member Name: "),
     },
     {
         name: "role",
-        message: "Team Member Role: ",
+        message: style.q("Team Member Role: "),
         type: "list",
         choices: ["Intern", "Engineer", "Manager"],
     },
     {
         name: "id",
         type: "number",
+        message: style.q("Team Member ID: "),
     },
     {
         name: "email",
-        message: "Team Member Email: ",
+        message: style.q("Team Member Email: "),
     },
     {
         name: "other",
         message: (answers) => {
             switch (answers.role) {
                 case "Intern":
-                    return "Please input Intern's school: ";
+                    return style.q("Please input Intern's school: ");
                 case "Engineer":
-                    return "Please input Engineer's GitHub Username: ";
+                    return style.q("Please input Engineer's GitHub Username: ");
                 case "Manager":
-                    return "Please input Manager's Office Number: ";
+                    return style.q("Please input Manager's Office Number: ");
             }
         },
     },
